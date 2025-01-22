@@ -1,10 +1,6 @@
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-FPS = 60
+class Settings:
+    def __init__(self, screen_width, screen_height, file_path):
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.file_path = file_path
 
-# カラーパレット
-COLORS = {
-    "white": (255, 255, 255),
-    "black": (0, 0, 0),
-    "red": (255, 0, 0),
-}

@@ -1,30 +1,31 @@
 import pygame
-from game.scenes import SceneManager
+from mutagen.mp3 import MP3
 
-class GameEngine:
-    def __init__(self, width, height):
-        pygame.init()
-        self.screen = pygame.display.set_mode((width, height))
-        self.clock = pygame.time.Clock()
-        self.running = True
-        self.scene_manager = SceneManager(self.screen)
+class AudioEngine:
+    MUSIC_END_EVENT = pygame.USEREVENT + 1
 
-    def run(self):
-        while self.running:
-            self._handle_events()
-            self._update()
-            self._render()
+    def __init__(self, file_path):
+        pygame.mixer.init()
+        self.file_path = file_path
+        self.sound_length = MP3(file_path).info.length
+        self.time_list = [i for i in range(0, int(self.sound_length) + 20, 20)]
+        self.index = 0
+        self.start_time = 0
+        pygame.mixer.music.load(file_path)
+        pygame.mixer.music.set_endevent(self.MUSIC_END_EVENT)
 
-    def _handle_events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.running = False
-            self.scene_manager.handle_event(event)
+    def play(self):
+        pygame.mixer.music.play(start=self.start_time)
 
-    def _update(self):
-        self.scene_manager.update()
+    def skip_to_index(self, index):
+        self.index = max(0, min(index, len(self.time_list) - 1))
+        self.start_time = self.time_list[self.index]
+        pygame.mixer.music.play(start=self.start_time)
 
-    def _render(self):
-        self.scene_manager.render()
-        pygame.display.flip()
-        self.clock.tick(60)
+    def get_current_time(self):
+        if pygame.mixer.music.get_busy():
+            return pygame.mixer.music.get_pos() / 1000 + self.start_time
+        return 0
+
+    def quit(self):
+        pygame.mixer.quit()
