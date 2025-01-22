@@ -1,19 +1,22 @@
 from settings import Settings
 from source.engine import AudioEngine
 from source.gui import GUI
+from source.events import EventHandler
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+DEFAULT_SCREEN_WIDTH = 800
+DEFAULT_SCREEN_HEIGHT = 600
+PATH_FILE_NAME = "file_path.txt"
 FPS = 30
 
 def main():
-    settings = Settings(screen_width = SCREEN_WIDTH, screen_height = SCREEN_HEIGHT,file_path="/mnt/c/Users/nalum/Music/TOXIC_VISIONS/Seventhrun_Zootoxin.mp3")
-    audio_engine = AudioEngine(settings.file_path)
+    settings = Settings(default_screen_width = DEFAULT_SCREEN_WIDTH, default_screen_height = DEFAULT_SCREEN_HEIGHT, path_file_name = PATH_FILE_NAME)
+    audio_engine = AudioEngine(settings.audio_file_path)
     gui = GUI(settings, audio_engine)
+    event_handler = EventHandler(audio_engine, gui)
 
     running = True
     while running:
-        running = gui.handle_events()
+        running = event_handler.handle_events()
         gui.update_display()
 
     audio_engine.quit()
