@@ -1,5 +1,5 @@
 import pygame
-from source.engine import AudioEngine
+from engine import AudioEngine
 
 class GUI:
     def __init__(self, settings, audio_engine):

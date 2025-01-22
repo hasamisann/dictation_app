@@ -1,6 +1,6 @@
 import pygame
-from source.engine import AudioEngine
-from source.gui import GUI
+from engine import AudioEngine
+from gui import GUI
 
 class EventHandler:
     def __init__(self, audio_engine, gui):

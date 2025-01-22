@@ -1,7 +1,7 @@
 from settings import Settings
-from source.engine import AudioEngine
-from source.gui import GUI
-from source.events import EventHandler
+from engine import AudioEngine
+from gui import GUI
+from events import EventHandler
 
 DEFAULT_SCREEN_WIDTH = 800
 DEFAULT_SCREEN_HEIGHT = 600
