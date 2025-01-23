@@ -1,5 +1,4 @@
 import pygame
-from engine import AudioEngine
 
 class GUI:
     def __init__(self, settings, audio_engine):
@@ -29,15 +28,14 @@ class GUI:
         played_width = (current_time / self.audio_engine.sound_length) * self.bar_width
         pygame.draw.rect(self.screen, (80, 80, 80), (self.bar_x, self.bar_y, played_width, self.bar_height))
 
-        # Draw time markers
-        for t in self.audio_engine.time_list:
-            if t <= self.audio_engine.sound_length:
-                triangle_x = self.bar_x + (t / self.audio_engine.sound_length) * self.bar_width
-                pygame.draw.polygon(self.screen, (100, 100, 100), [
-                    (triangle_x - 5, self.bar_y - 5),
-                    (triangle_x, self.bar_y),
-                    (triangle_x + 5, self.bar_y - 5)
-                ])
+        # Draw cue markers
+        for t in self.audio_engine.cue_list:
+            triangle_x = self.bar_x + (t / self.audio_engine.sound_length) * self.bar_width
+            pygame.draw.polygon(self.screen, (100, 100, 100), [
+                (triangle_x - 5, self.bar_y - 5),
+                (triangle_x, self.bar_y),
+                (triangle_x + 5, self.bar_y - 5)
+            ])
 
         pygame.time.Clock().tick(30)
         pygame.display.flip()

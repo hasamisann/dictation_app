@@ -2,6 +2,7 @@ from settings import Settings
 from engine import AudioEngine
 from gui import GUI
 from events import EventHandler
+import time
 
 DEFAULT_SCREEN_WIDTH = 800
 DEFAULT_SCREEN_HEIGHT = 600
@@ -18,7 +19,8 @@ def main():
     while running:
         running = event_handler.handle_events()
         gui.update_display()
-
+        audio_engine.monitor_loop_point()
+        time.sleep(0.001)
     audio_engine.quit()
     gui.quit()
 
