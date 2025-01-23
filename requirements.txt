@@ -1,0 +1,4 @@
+pygame
+mutagen
+git+https://github.com/openai/whisper.git
+pygame_textinput
