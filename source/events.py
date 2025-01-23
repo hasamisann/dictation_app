@@ -1,5 +1,5 @@
 import pygame
-from engine import AudioEngine
+from source.audio_engine import AudioEngine
 
 class EventHandler:
     def __init__(self, audio_engine, gui):

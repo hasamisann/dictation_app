@@ -1,5 +1,5 @@
 from settings import Settings
-from engine import AudioEngine
+from source.audio_engine import AudioEngine
 from gui import GUI
 from events import EventHandler
 import pygame
