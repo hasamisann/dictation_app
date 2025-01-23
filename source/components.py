@@ -97,15 +97,3 @@ class Toggle:
                 self.isON = not self.isON
                 return True
         return False
-        
-            
-
-
-            
-        
-
-
-        
-
-
-        

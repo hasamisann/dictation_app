@@ -85,12 +85,10 @@ class Engine:
     def set_cue_by_sentences_with_whisper(self, model_weight): 
         def normalize_text(text):
             text = text.lower()
-            text = re.sub(r'[^\w\s]', '', text)  # 句読点を削除
+            text = re.sub(r'[^\w\s]', '', text)
             return text
         
         def match_sentence(str1, str2):
-            print(str1)
-            print(str2)
             words1 = str1.split()
             words2 = str2.split()
             for word1, word2 in zip(words1, words2):
@@ -98,20 +96,15 @@ class Engine:
                     return False
             return True
 
-        # スクリプトを読み込み
         with open(self.script_file_path, 'r', encoding='utf-8') as f:
             sentences = [line.strip() for line in f if line.strip()]
 
-        # スクリプト文を正規化
         normalized_sentences = [normalize_text(sentence) for sentence in sentences]
 
-        # Whisperモデルの読み込み
         model = whisper.load_model(model_weight)
 
-        # 音声ファイルの認識
         result = model.transcribe(self.audio_file_path)
 
-        # 各スクリプト文に対して最適なタイムスタンプを取得
         timestamps = []
         index = 0
         for normalized_sentence in normalized_sentences:
@@ -125,7 +118,6 @@ class Engine:
                     index = i + 1
                     break
 
-        print(timestamps)
         if len(timestamps) < 5:
             timestamps = [segment['start'] for segment in result['segments']]
 

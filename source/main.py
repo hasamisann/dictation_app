@@ -5,8 +5,8 @@ from events import EventHandler
 from script import Script
 import pygame
 
-DEFAULT_SCREEN_WIDTH = 800
-DEFAULT_SCREEN_HEIGHT = 600
+DEFAULT_SCREEN_WIDTH = 1280
+DEFAULT_SCREEN_HEIGHT = 720
 PATH_FILE_NAME = "file_path.txt"
 FPS = 30
 

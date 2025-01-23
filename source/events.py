@@ -10,7 +10,11 @@ class EventHandler:
         self.gui = gui
 
     def handle_events(self):
-        for event in pygame.event.get():
+        events = pygame.event.get()
+
+        self.gui.textinput.update(events)
+
+        for event in events:
             current_time = self.engine.get_current_time()
             index = self.engine.find_index(self.engine.cue_list, current_time)
 
@@ -33,12 +37,12 @@ class EventHandler:
                     self.engine.skip_to_index(self.engine.index - 1)
 
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_i: # insert cue
-                    self.engine.insert_cue(current_time)
-
-                elif event.key == pygame.K_d: # delete cue
-                    self.engine.delete_cue(index)
-                    self.engine.index = self.engine.find_index(self.engine.cue_list, current_time)
+                if event.key == pygame.K_RETURN:
+                    self.script.input(self.gui.textinput.value)
+                    self.script.check_words()
+                    self.gui.output_result()
+                    self.gui.textinput_initialize()
+                    self.script.inputs = []
 
             elif self.gui.buttons['back'].clicked(event):
                 self.engine.skip_to_index(index - 1)
@@ -51,6 +55,17 @@ class EventHandler:
 
             elif self.gui.buttons['skip'].clicked(event):
                 self.engine.skip_to_index(index + 1)
+
+            elif self.gui.buttons['insert'].clicked(event):
+                self.engine.insert_cue(current_time)
+
+            elif self.gui.buttons['delete'].clicked(event):
+                self.engine.delete_cue(index)
+                self.engine.index = self.engine.find_index(self.engine.cue_list, current_time)
+            
+            elif self.gui.buttons['save'].clicked(event):
+                self.engine.save_cue()
+                
 
             elif self.gui.toggles['loop'].clicked(event):
                 self.loop_mode = not self.loop_mode

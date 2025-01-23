@@ -12,31 +12,37 @@ class Script:
         self.result = []
         self.words_index = 0
 
-    def input(self):
-        user_input = input()
-        self.inputs = user_input.split()
+    def input(self, str):
+        self.inputs = str.split()
   
     def check_words(self):
+        self.result = []
         d = difflib.Differ()
         def nm(words):
             return [re.sub(r'[^\w\s]', '', word.lower()) for word in words]
+        self.inputs = nm(self.inputs)
         diffs = d.compare(nm(self.words[self.words_index:]), nm(self.inputs))
-        
-        correct = True
-        for diff in diffs:
-            status = diff[0]  # 差分のステータス（' ', '-', '+' のいずれか）
-            word = [diff[2:], ' ']   # 実際の単語
 
-            if status == '-':  # inputにだけ存在する単語
+        correct = True
+        index = 0 
+        for diff in diffs:
+            if index == len(self.inputs):
+                break
+            status = diff[0]  # diff status（' ', '-', '+'）
+            word = [diff[2:], ' ']
+            index += 1
+
+            if status == '-':
+                index -= 1
                 correct = False
-                word = [word, '-']
-            elif status == '+':  # wordsにだけ存在する単語
+                word = ['*', '-']
+            elif status == '+':
                 correct = False
-                word = ["*", '+']
+                word = [word[0], '+']
 
             self.result.append(word)
         if correct:
-            self.words_index = len(self.inputs)
+            self.words_index += len(self.inputs)
             if self.words_index > len(self.words) - 1:
                 pygame.event.post(pygame.event.Event(pygame.QUIT))
             
