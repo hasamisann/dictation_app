@@ -1,6 +1,8 @@
-test.py
+*test.py
 
 __pycache__/
 *.pyc
 
 *.txt
+
+data/

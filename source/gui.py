@@ -1,45 +1,36 @@
+from components import SeekBar, Button, Toggle
 import pygame
 
 class GUI:
-    def __init__(self, settings, engine):
+    def __init__(self, settings, engine, script):
         pygame.init()
         self.settings = settings
         self.engine = engine
-        self.screen_width = settings.default_screen_width
-        self.screen_height = settings.default_screen_height
-        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height), pygame.RESIZABLE)
+        #self.script = script
+        self.screen = pygame.display.set_mode((settings.default_screen_width, settings.default_screen_height), pygame.RESIZABLE)
+        self.seekbar = SeekBar(self.engine)
+        self.buttons = {
+            "skip": Button(50, ">>", (50, 50, 50), 40, 40),
+            "pause": Button(0, "P", (50, 50, 50,), 40, 40),
+            "back": Button(-100, "<<", (50, 50, 50,), 40, 40),
+            "replay": Button(-50, "|<", (50, 50, 50), 40, 40)
+        }
+        self.toggles = {
+            "loop": Toggle(150, "L", (50, 50, 50), 66, 40)
+        }
         self.running = True
-        self.bar_width, self.bar_height, self.bar_x, self.bar_y = self.update_display_param()
-
-    def update_display_param(self):
-        bar_width = self.screen_width - 100
-        bar_height = 10
-        bar_x = self.screen_width / 2 - bar_width / 2
-        bar_y = self.screen_height - 30
-        return bar_width, bar_height, bar_x, bar_y
 
     def update_display(self):
         self.screen.fill((255, 255, 255))
 
-        current_time = self.engine.get_current_time()
+        self.seekbar.draw(self.screen, self.screen.get_width(), self.screen.get_height())
 
-        # Draw seek bar
-        pygame.draw.rect(self.screen, (200, 200, 200), (self.bar_x, self.bar_y, self.bar_width, self.bar_height))
-        played_width = (current_time / self.engine.sound_length) * self.bar_width
-        pygame.draw.rect(self.screen, (110, 110, 110), (self.bar_x, self.bar_y, played_width, self.bar_height))
+        for button in self.buttons.values():
+            button.draw(self.screen, self.screen.get_width(), self.screen.get_height())
 
-        # Draw cue markers
-        for i, cue in enumerate(self.engine.cue_list):
-            cue = self.engine.cue_list[i]
-            color = (90, 90, 90)
-            if i == self.engine.index:
-                color = (37, 176, 243)
-            triangle_x = self.bar_x + (cue / self.engine.sound_length) * self.bar_width
-            pygame.draw.polygon(self.screen, color, [
-                (triangle_x - 5, self.bar_y - 6),
-                (triangle_x, self.bar_y - 1),
-                (triangle_x + 5, self.bar_y - 6)
-            ])
+        for toggle in self.toggles.values():
+            toggle.draw(self.screen, self.screen.get_width(), self.screen.get_height())
+
         pygame.display.flip()
 
     def quit(self):
