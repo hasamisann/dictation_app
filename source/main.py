@@ -30,7 +30,7 @@ def main():
         running = event_handler.handle_events()
         gui.update_display()
         engine.monitor_loop_point()
-        pygame.time.Clock().tick(60)
+        pygame.time.Clock().tick(FPS)
     engine.quit()
     gui.quit()
 
