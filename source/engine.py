@@ -16,8 +16,7 @@ class Engine:
         self.audio_file_path = audio_file_path
         self.script_file_path = script_file_path
         self.sound_length = MP3(audio_file_path).info.length
-        self.cue_list = [float(i) + 0.2 for i in range(0, int(self.sound_length), 5)]
-        self.cue_list.append(self.sound_length - 0.1)
+        self.cue_list = []
         self.index = 0
         self.start_time = 0
         pygame.mixer.music.load(audio_file_path)
@@ -127,7 +126,10 @@ class Engine:
                     break
 
         print(timestamps)
+        if len(timestamps) < 5:
+            timestamps = [segment['start'] for segment in result['segments']]
 
+        timestamps.append(self.sound_length - 0.1)
         self.cue_list = timestamps
 
     def quit(self):
