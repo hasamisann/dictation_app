@@ -2,7 +2,7 @@ from settings import Settings
 from engine import AudioEngine
 from gui import GUI
 from events import EventHandler
-import time
+import pygame
 
 DEFAULT_SCREEN_WIDTH = 800
 DEFAULT_SCREEN_HEIGHT = 600
@@ -20,7 +20,7 @@ def main():
         running = event_handler.handle_events()
         gui.update_display()
         audio_engine.monitor_loop_point()
-        time.sleep(0.001)
+        pygame.time.Clock().tick(60)
     audio_engine.quit()
     gui.quit()
 

@@ -36,8 +36,6 @@ class GUI:
                 (triangle_x, self.bar_y),
                 (triangle_x + 5, self.bar_y - 5)
             ])
-
-        pygame.time.Clock().tick(30)
         pygame.display.flip()
 
     def quit(self):
