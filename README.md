@@ -16,7 +16,6 @@ sudo apt install git
 - ffmpegも
 ```
 sudo apt install ffmpeg
-
 ```
 - ライブラリのインストール
 ```
