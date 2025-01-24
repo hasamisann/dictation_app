@@ -2,12 +2,12 @@
 OpenAI Whisperを使用して、音声ファイルを自動でセンテンスごとに区切ってキューマーカーを挿入します。
 
 ## 環境
-- WSL2 Ubuntu 22.04でしか試してないです.
+- WSL2 Ubuntu 22.04でしか試してないです。
 - python 3.7以上
 
 ## 使い方
-- このリポジトリをダウンロードして適当なところに展開してください.
-- gitがない場合はインストールしてください.
+- このリポジトリをダウンロードして適当なところに展開してください。
+- gitがない場合はインストールしてください。
 ```
 sudo apt update
 sudo apt install git
@@ -23,8 +23,9 @@ pip3 install -r requirements.txt
 （venv等の仮想環境の使用を推奨します)
 
 - ファイルパス指定
-  下記の内容のfile_path.txtをdictation_app-main直下に作成してください.指定したファイルが読み込まれます。パスは適宜変えてください.
-  現時点ではmp3ファイルとtxtファイルのみ対応しています.
+
+下記の内容のfile_path.txtをdictation_app-main直下に作成してください.指定したファイルが読み込まれます。パスは適宜変えてください。
+現時点ではmp3ファイルとtxtファイルのみ対応しています。
 ```
 audio_file=path/to/audio_file.mp3
 script_file=path/to/script_file.txt
